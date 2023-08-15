@@ -135,10 +135,25 @@ El calculo de S es una generalizacion de Find-S. Generalizar y especificar depen
 
 # Sesgo Inductivo
 
-Que sucede si el concepto objetivo no esta considerado en H. Si consideramos el espacio de todos los conceptos posibles no se puede aprender nada.
+1. **Sesgo Inductivo**: Para que un algoritmo de aprendizaje pueda generalizar más allá de los datos de entrenamiento, debe tener un conjunto de suposiciones previas, conocido como sesgo inductivo. Sin este sesgo, el algoritmo no podría hacer predicciones sobre datos no vistos.
 
-Ejemplo: [alta, ?, ?, ?, ?] OR [?, baja, ?, ?, ?] no se puede construir bajo H.
+2. **Algoritmo CANDIDATE-ELIMINATION**: Este algoritmo convergerá al concepto objetivo real si el concepto objetivo está dentro de su espacio de hipótesis y los ejemplos de entrenamiento son precisos. Sin embargo, si el concepto objetivo no está en el espacio de hipótesis, el algoritmo fallará.
 
-Sesgo inductivo del algoritmo L es el conjunto minimo de suposiciones B tq:
+3. **Espacio de Hipótesis Sesgado vs. No Sesgado**: 
+    - Un espacio de hipótesis sesgado restringe las posibles hipótesis, lo que puede llevar a perder el concepto objetivo. Por ejemplo, si el espacio solo considera conjunciones de atributos, podría perder conceptos disyuntivos.
+    - Un espacio de hipótesis no sesgado, que incluye todas las hipótesis posibles, asegura que el concepto objetivo es expresable. Sin embargo, esto puede llevar a un sobreajuste, donde el algoritmo no puede generalizar más allá de los ejemplos observados.
 
-- para todo x  [(B ^ D ^ x) -> L clasifica correctamente x]
+4. **Futilidad del Aprendizaje Sin Sesgo**: Sin ningún sesgo inductivo, un algoritmo de aprendizaje no puede hacer clasificaciones racionales para instancias no vistas. La única forma en que puede clasificar es si ha visto la instancia exacta antes.
+
+5. **Definición de Sesgo Inductivo**: El sesgo inductivo de un algoritmo de aprendizaje es el conjunto de suposiciones que, combinadas con los datos de entrenamiento, permiten que las clasificaciones del algoritmo se infieran deductivamente. Para el algoritmo CANDIDATE-ELIMINATION, su sesgo inductivo es la suposición de que el concepto objetivo está contenido dentro de su espacio de hipótesis dado.
+
+6. **Comparación de Algoritmos de Aprendizaje por Sesgo**:
+    - **ROTE-LEARNER**: Almacena cada ejemplo de entrenamiento y clasifica nuevas instancias mediante búsqueda en memoria. No tiene sesgo inductivo.
+    - **CANDIDATE-ELIMINATION**: Clasifica nuevas instancias solo si todas las hipótesis en su espacio de versión están de acuerdo con la clasificación. Su sesgo es que el concepto objetivo es representable en su espacio de hipótesis.
+    - **FIND-S**: Encuentra la hipótesis más específica consistente con ejemplos de entrenamiento y la usa para clasificar todas las instancias posteriores. Asume que todas las instancias son negativas a menos que se demuestre lo contrario.
+
+7. **Fuerza del Sesgo Inductivo**: Los métodos con un sesgo más fuerte pueden clasificar una mayor proporción de instancias no vistas. Sin embargo, la corrección de dichas clasificaciones depende de la precisión del sesgo.
+
+En esencia, el sesgo inductivo es crucial para que cualquier algoritmo de aprendizaje automático haga predicciones significativas sobre nuevos datos no vistos. Sin él, el algoritmo podría ajustarse demasiado a los datos de entrenamiento o ser incapaz de hacer cualquier predicción.
+
+
