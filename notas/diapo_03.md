@@ -28,3 +28,48 @@ Se presenta un conjunto de ejemplos de entrenamiento relacionados con la decisi�
 
 ## **Conclusión:**
 El aprendizaje de árboles de decisión es una herramienta poderosa en la inferencia inductiva, capaz de manejar datos ruidosos y representar decisiones complejas. La elección del atributo adecuado en cada paso es esencial para la eficacia del árbol resultante.
+
+# Notas clase
+
+## **Árboles de decisión**
+
+Los arboles de decision evaluan el conjunto de entrenamiento mediante la union de reglas de decision basado en los atributos de los datos.
+
+Lo que vamos a elegir es un arbol de decision aplicando un algoritmo.
+
+La potencia de los arboles de decision es que pueden implementar cualquier funcion booleana.
+
+Son faciles de entender ademas pq son facilmeente traducibles a las reglas que evaluan los datos.
+
+Hay varios algoritmos que construyen arboles de decision, nosotros vamos a er ID3.
+
+## **ID3**
+
+La idea es elejir un atributo y profundizar en el arbol hasta llegar a una hoja (es decir, una regla que evalua true o false).
+
+Algoritmo:
+
+- creamos una raiz (despues vemos como elegir la raiz)
+- si todos los ejemplos para el valor de ese atributo evaluan true o false, entonces creamos una hoja con ese valor
+- si no me quedan atributos, etiqueto con el valor mas comun.
+- en caso contrario, la raiz pregunta por A, el atributo que mejor clasifica los ejemplos. Para cada valor vi de A,
+  - genero una rama
+  - Ejemplosvi={ejemplos en los cuales A=vi}
+  - si Ejemplosvi es vacio, entonces creo una hoja con el valor mas comun
+  - en caso contrario, creo un subarbol con raiz A y profundizo en el subarbol con los ejemplos Ejemplosvi
+
+Cual es el mejor atributo? El que mejor clasifica los ejemplos. Usamos la nocion de entriopia para medir la calidad de la clasificacion.
+
+En particular la ganancia de informacion de un atributo, que es la diferencia entre la entropia del conjunto de ejemplos y la entropia de los ejemplos clasificados por el atributo.
+
+Buscamos medir la reduccion en la entriopia al particionar por le atributo A.
+
+Ganancia es el numero de bits que ahorramos si sabemos el valor del atributo A.
+
+### Sesgo de ID3
+
+Aca podemos identificar dos tipos de sesgo.
+
+-sesgo preferencial: el algoritmo prefiera ciertas hipoesis sobre otras. En este caso, ID3 prefiere arboles cortos.
+
+-sesgo restrictivo: se maneja con un espacio de hipotesis restringido. En este caso, ID3 considera solo arboles de decision, pero los arboles de decision pueden representar cualquier funcion booleana.

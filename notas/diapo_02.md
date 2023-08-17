@@ -133,13 +133,18 @@ El calculo de S es una generalizacion de Find-S. Generalizar y especificar depen
 
 - El agloritmo converge a una hipotesis correcta cuando no existe ruido en los datos de entrenamiento o cuando el concepto objetivo pertenece al espacio de hipotesis.
 
+### Repaso y conclusiones
+
+- Si todo mi conjunto de hipotesis positivas(generales) evaluan false para un ejemplo, entonces ese ejemplo es negativo.
+- Analogamente, si todo mi conjunto de hipotesis negativas(especificas) evaluan true para un ejemplo, entonces ese ejemplo es positivo.
+
 # Sesgo Inductivo
 
 1. **Sesgo Inductivo**: Para que un algoritmo de aprendizaje pueda generalizar más allá de los datos de entrenamiento, debe tener un conjunto de suposiciones previas, conocido como sesgo inductivo. Sin este sesgo, el algoritmo no podría hacer predicciones sobre datos no vistos.
 
 2. **Algoritmo CANDIDATE-ELIMINATION**: Este algoritmo convergerá al concepto objetivo real si el concepto objetivo está dentro de su espacio de hipótesis y los ejemplos de entrenamiento son precisos. Sin embargo, si el concepto objetivo no está en el espacio de hipótesis, el algoritmo fallará.
 
-3. **Espacio de Hipótesis Sesgado vs. No Sesgado**: 
+3. **Espacio de Hipótesis Sesgado vs. No Sesgado**:
     - Un espacio de hipótesis sesgado restringe las posibles hipótesis, lo que puede llevar a perder el concepto objetivo. Por ejemplo, si el espacio solo considera conjunciones de atributos, podría perder conceptos disyuntivos.
     - Un espacio de hipótesis no sesgado, que incluye todas las hipótesis posibles, asegura que el concepto objetivo es expresable. Sin embargo, esto puede llevar a un sobreajuste, donde el algoritmo no puede generalizar más allá de los ejemplos observados.
 
@@ -155,5 +160,3 @@ El calculo de S es una generalizacion de Find-S. Generalizar y especificar depen
 7. **Fuerza del Sesgo Inductivo**: Los métodos con un sesgo más fuerte pueden clasificar una mayor proporción de instancias no vistas. Sin embargo, la corrección de dichas clasificaciones depende de la precisión del sesgo.
 
 En esencia, el sesgo inductivo es crucial para que cualquier algoritmo de aprendizaje automático haga predicciones significativas sobre nuevos datos no vistos. Sin él, el algoritmo podría ajustarse demasiado a los datos de entrenamiento o ser incapaz de hacer cualquier predicción.
-
-
