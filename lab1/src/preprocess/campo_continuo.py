@@ -24,4 +24,4 @@ class CampoContinuo:
         print("Medio Alto: (", str(self.alto) , ",", str(self.medio), "]")
         print("Medio Bajo: (", str(self.medio) , ",", str(self.bajo), "]")
         print("Bajo: (", str(self.bajo) , ", -inf)")
-        print("") 
+        print() 

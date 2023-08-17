@@ -37,5 +37,3 @@ if __name__ == "__main__":
 
     print("Saving test data to ../../assets/test_data.csv")
     test_data.to_csv('../../assets/test_data.csv', sep=';', index=False)
-
-
