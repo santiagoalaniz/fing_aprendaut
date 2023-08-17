@@ -160,6 +160,6 @@ cython_debug/
 #.idea/
 
 # ignore csv files
-*.csv
+
 # ignore book file
 book.pdf
