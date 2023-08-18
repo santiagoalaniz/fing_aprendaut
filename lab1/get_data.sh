@@ -13,7 +13,7 @@ download_dir="."
 extract_dir="./assets"
 
 # Download the ZIP file
-wget "$zip_url" --quiet -O "$download_dir/$zip_file"
+curl -s "$zip_url" -o "$download_dir/$zip_file"
 
 # Unzip the downloaded ZIP file
 unzip -o "$download_dir/$zip_file" -d "$extract_dir" 
