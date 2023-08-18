@@ -13,10 +13,10 @@ download_dir="."
 extract_dir="./assets"
 
 # Download the ZIP file
-wget "$zip_url" -O "$download_dir/$zip_file"
+wget "$zip_url" --quiet -O "$download_dir/$zip_file"
 
 # Unzip the downloaded ZIP file
-unzip "$download_dir/$zip_file" -d "$extract_dir"
+unzip -o "$download_dir/$zip_file" -d "$extract_dir" 
 
 # Remove the downloaded ZIP file
 rm "$download_dir/$zip_file"
