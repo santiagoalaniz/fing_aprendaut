@@ -18,7 +18,7 @@ class Nodo:
         if tipo == Nodo.rama and hijos is None:
             raise ValueError("Hijos must be provided if tipo is 'rama'")
         
-        if n_casos is None or n_casos <= 0:
+        if n_casos is None or n_casos < 0:
             raise ValueError("n_casos must be greater than 0")
         
         self.attr = attr

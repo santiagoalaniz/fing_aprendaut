@@ -28,6 +28,7 @@ class CustomID3Classifier(BaseEstimator, ClassifierMixin):
     # FIT
     ###########################################################################
     def fit(self, X: pd.DataFrame, y):
+        self.X = X
         self.root = self.__fit(X, y, X.columns.values, "root", 0)
 
     def __fit(self, X: pd.DataFrame, y, attributes, attr, value):
@@ -41,9 +42,9 @@ class CustomID3Classifier(BaseEstimator, ClassifierMixin):
         # Caso recursivo
         else:
             # Seleccionar el mejor atributo
-            best_attribute, gain, unique_values = self.__get_best_attribute(
+            best_attribute, gain = self.__get_best_attribute(
                 X, y, attributes)
-            
+
             # if gain < MIN_SPLIT_GAIN:
             #     print_value(value)
             #     return Nodo(attr, value, tipo=Nodo.hoja, resultado= y.mode()[0])
@@ -56,36 +57,36 @@ class CustomID3Classifier(BaseEstimator, ClassifierMixin):
             attributes = attributes[attributes != best_attribute]
             # Crear un nodo hijo por cada valor del atributo
             children = []
-            for child_value in unique_values:
+            for child_value in self.X[best_attribute].unique():
                 subdata = X[X[best_attribute] == child_value]
                 y_sub = y[X[best_attribute] == child_value]
-                child = self.__fit(subdata, y_sub, attributes,
-                                   best_attribute, child_value)
 
-                children.append(child)
+                if subdata.shape[0] == 0:
+                    return Nodo(attr, value, tipo=Nodo.hoja, resultado=y.mode()[0], n_casos=0)
+                else:
+                    child = self.__fit(subdata, y_sub, attributes,
+                                       best_attribute, child_value)
+                    children.append(child)
 
             return Nodo(attr, value, tipo=Nodo.rama, hijos=children, n_casos=X.shape[0])
 
     def __get_best_attribute(self, X, y, attributes):
         best_attribute = None
         best_gain = 0
-        best_unique_values = None
         for attribute in attributes:
-            gain, unique_values = self.__get_gain(X, y, attribute)
+            gain = self.__get_gain(X, y, attribute)
             if gain >= best_gain:
                 best_attribute = attribute
                 best_gain = gain
-                best_unique_values = unique_values
-        return best_attribute, best_gain, best_unique_values
+        return best_attribute, best_gain
 
     def __get_gain(self, X, y, attribute):
         gain = self.__get_entropy(y)
-        unique_values = X[attribute].unique()
-        for value in unique_values:
+        for value in X[attribute].unique():
             subdata = y[X[attribute] == value]
             gain -= (subdata.shape[0] / X.shape[0]) * \
                 self.__get_entropy(subdata)
-        return gain, unique_values
+        return gain
 
     def __get_entropy(self, y):
         entropy = 0
