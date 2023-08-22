@@ -1,32 +1,51 @@
 # En este archivo de python se encuentra nuestra implementacion del algoritmo ID3, su diseño
-# esta inspirado en el modulo sklearn.tree.DecisionTreeClassifier, por ejemplo en el nombramiento
+# esta inspirado en los classifiers de sklearn, por ejemplo en el nombramiento
 # de los metodos (fit, predict, score), y en la forma de pasar los parametros.
-# Motivacion: Parecernos lo mas posible a los clasificadores de sklearn, para que sea mas
-# facil comparar con los resultados.
+# Motivacion: Parecernos lo mas posible a los clasificadores de sklearn, para que 
+# la comparacion sea sencilla.
 
-import pandas as pd
 import src.ID3_utils as utils
+from sklearn.metrics import accuracy_score
 
-class G02ID3Classifier():
-    def __init__(self, min_samples_split=0, min_split_gain=0):
+class ID3Classifier():
+    def __init__(self, min_samples_split=0, min_split_gain=0.):
         self.min_samples_split = min_samples_split
         self.min_split_gain = min_split_gain
 
     def fit(self, X, y):
-        self.attributes = X.columns.values
         self.attributes_values = {attr: X[attr].unique() for attr in self.attributes}
         X['Target'] = y
+        self.tree = self.__id3(X, 'Target', X.iloc[:, :-1].columns)
     
     def predict(self, X):
-        return 1
+        return utils.evaluate(X, self.tree)
     
-    def score(self, X, y):
-        return 1
+    def score(self, X, y, sample_weight=None):
+        return accuracy_score(y, self.predict(X), sample_weight=sample_weight)
     
-    # private methods
+    # private
 
-    def __id3(self):
-        return 1
+    ## Mitchell, p. 56
+    def __id3(self, exs, attr_tget, attrs):
+        if exs[attr_tget].nunique() == 1: return utils.leaf(1)
+        if exs[attr_tget].nunique() == 0: return utils.leaf(0)
+        if len(attrs) == 0: return utils.leaf(exs[attr_tget].mode()[0])
+
+        best_attr, gain = utils.max_gain_attr(exs, attr_tget, attrs)
+        
+        if gain <= self.min_split_gain: return utils.leaf(exs[attr_tget].mode()[0])
+        node = utils.node(best_attr, gain)
+        best_attr_values = self.attributes_values[best_attr]
+        
+        for attr_val in best_attr_values:
+            exs_i = exs[exs[best_attr] == attr_val]
+
+            if exs_i.shape[0] <= self.min_samples_split: 
+              node.children[attr_val] = utils.leaf(exs[attr_tget].mode()[0])
+            else: 
+              node.children[attr_val] = self.__id3(exs_i, attr_tget, attrs.drop(best_attr))
+        
+        return node
         
 
 def main():
