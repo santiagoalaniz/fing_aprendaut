@@ -73,3 +73,58 @@ Aca podemos identificar dos tipos de sesgo.
 -sesgo preferencial: el algoritmo prefiera ciertas hipoesis sobre otras. En este caso, ID3 prefiere arboles cortos.
 
 -sesgo restrictivo: se maneja con un espacio de hipotesis restringido. En este caso, ID3 considera solo arboles de decision, pero los arboles de decision pueden representar cualquier funcion booleana.
+
+
+### Sobreajuste de ID3
+
+h e H se sobreajusta a un conjunto de entrenamiento si existe h' eH tal que h comete menos errores en el conjunto de entrenamiento que h', pero comete mas errores en el conjunto de prueba.
+
+Se puede dar por:
+
+- ruido en los datos: el arbol aprende a calsificar correctamente ejemplos erroneos, que lo inducen a clasificar mal ejemplos del dominio mas general.
+
+- cantidad insuficiente de ejemplos: aparecen regularidads que no se cumplen en el dominio, en nuestro caso, que tan importante el horario en un examen?
+
+Se puede corregir:
+
+- Deteniendo el crecimiento del arbol antes de que se sobreajuste.
+- Luego de obtenido el arbol, aplicar tecnicas de podado.
+
+### Evitar sobreajustes
+
+Poda de reglas [C4.5]
+
+- Transformar el arbol en el conjunto de reglas que lo representan.
+- Quitamos condiciones de las reglas de forma que estas mejoren su estimacion en el conjunto de validacion
+- Ordenamos las reglas de acuerdo a su porcentaje de aciertos en el conjunto de validacion y ante nuevas instancias, aplicamos en orden.
+
+### Problema de atributos continuos
+
+Se puede generar dinamicamente intervalos para estos atributos para que luego compitan como atributos discretos. Los arboles de regresion permite manejar los casos en donde la propia funcion objetivo es continua.
+
+### Ejemplo con atributos incompletos
+
+En algunos casos los ejemplos tienen atributos sin valores.
+
+Se puede:
+
+- Suplirlos con otros ejemplos que si los tengan.
+- Una estrategia es asignar el valor mas comun de ese atributo faltante en todo el conjunto de entrenamiento o en el subconjunto de ese nodo.
+- El valor tambien puede asignarse de acuerdo a ciertas probabilidad usualmente estamadas a partir de los otros ejemplos.
+
+
+# Random Forest
+
+Utiliza bagging: se entrena un conjunto de arboles de decision, cada uno con un subconjunto de ejemplos de entrenamiento elegidos al azar.
+
+Se ciontruyen muchos arboles no correlacionados y se someten cortes y decisiones a votacion.
+
+hiperparametros:
+
+- cuantos arboles voy a construir
+- cuantos ejemplos voy a usar para entrenar cada arbol
+- cuantos atributos voy a usar para entrenar cada arbol
+
+# Extra Trees / Ada Boost
+
+Parecido a random forest, pero en vez de elegir el mejor corte, se elige un corte al azar.
