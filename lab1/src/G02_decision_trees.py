@@ -32,7 +32,8 @@ class ID3Classifier():
         if exs[attr_tget].nunique() == 0: return utils.node(0)
         if len(attrs) == 0: return utils.node(exs[attr_tget].mode()[0])
 
-        best_attr, gain = utils.max_gain_attr(exs, attr_tget, attrs)
+        _attrs_values = { k: self.attrs_values[k] for k in attrs }
+        best_attr, gain = utils.max_gain_attr(exs, attr_tget, _attrs_values)
         
         if gain <= self.min_split_gain: return utils.node(exs[attr_tget].mode()[0])
         
