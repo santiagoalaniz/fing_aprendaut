@@ -13,3 +13,5 @@ Desafortunadamente, los conjuntos de datos que obtenemos vienen de la realidad y
 - Lo PRIMERO que hay que hacer es partir el conjunto de datos en dos: entrenamiento y prueba.
 
 Del conjunto de entrenamiento se usa para todo, mientras que el otro se usa para ver que tan bien le pegue.
+
+El preprocesamiento es parte del modelado, pq involucra tomar decisiones sobre como representar la realidad a analizar.
