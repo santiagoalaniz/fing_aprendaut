@@ -6,17 +6,19 @@
 
 import src.ID3_utils as utils
 from sklearn.metrics import accuracy_score
+import pdb
 
 class ID3Classifier():
-    def __init__(self, min_samples_split=0, min_split_gain=0., attrs_values={}):
+    def __init__(self, attrs_values={}, min_samples_split=0, min_split_gain=0.):
         self.min_samples_split = min_samples_split
         self.min_split_gain = min_split_gain
         self.tree = None
         self.attrs_values = attrs_values
+        self.attrs = list(attrs_values.keys())
 
     def fit(self, X, y):
-        X['Target'] = y
-        self.tree = self.__id3(X, 'Target', X.iloc[:, :-1].columns)
+        X[y.name] = y
+        self.tree = self.__id3(X, y.name, self.attrs)
     
     def predict(self, X):
         return utils.evaluate(X, self.tree)
@@ -45,8 +47,9 @@ class ID3Classifier():
 
             if exs_i.shape[0] <= self.min_samples_split: 
               node.children[attr_val] = utils.node(exs[attr_tget].mode()[0])
-            else: 
-              node.children[attr_val] = self.__id3(exs_i, attr_tget, attrs.drop(best_attr))
+            else:
+              attrs_i = [attr for attr in attrs if attr != best_attr]
+              node.children[attr_val] = self.__id3(exs_i, attr_tget, attrs_i)
         
         return node
         

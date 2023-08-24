@@ -35,3 +35,14 @@ def max_gain_attr(df, attr_tget, attrs_values):
         if H_df - H_df_attr > _gain: _attr, _gain = attr, (H_df - H_df_attr)
 
     return _attr, _gain
+
+def evaluate(X, tree):
+    y = np.zeros(X.shape[0])
+    
+    for i in range(X.shape[0]):
+        node = tree
+        while node.label not in [0, 1]:
+            node = node.children[X[node.label].iloc[i]]
+        y[i] = node.label
+    
+    return y
