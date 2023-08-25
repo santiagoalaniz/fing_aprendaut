@@ -6,7 +6,6 @@
 
 import src.ID3_utils as utils
 from sklearn.metrics import accuracy_score
-import pdb
 
 class ID3Classifier():
     def __init__(self, attrs_values={}, min_samples_split=0, min_split_gain=0.):
