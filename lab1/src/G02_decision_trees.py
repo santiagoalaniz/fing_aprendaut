@@ -30,9 +30,10 @@ class ID3Classifier():
 
     ## Mitchell, p. 68
     def __id3(self, exs, attr_tget, attrs):
-        if exs[attr_tget].nunique() == 1: return utils.node(1)
-        if exs[attr_tget].nunique() == 0: return utils.node(0)
-        if len(attrs) == 0: return utils.node(exs[attr_tget].mode()[0])
+        same_value_attr_tget = exs[attr_tget].nunique() == 1
+        attrs_empty = len(attrs) == 0
+        
+        if same_value_attr_tget or attrs_empty: return utils.node(exs[attr_tget].mode()[0])
 
         _attrs_values = { k: self.attrs_values[k] for k in attrs }
         best_attr, gain = utils.max_gain_attr(exs, attr_tget, _attrs_values)
