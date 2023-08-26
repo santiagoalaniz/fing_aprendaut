@@ -8,7 +8,7 @@ import src.ID3_utils as utils
 from sklearn.metrics import accuracy_score
 
 class ID3Classifier():
-    def __init__(self, attrs_values={}, min_samples_split=0, min_split_gain=0.):
+    def __init__(self, attrs_values= {}, min_samples_split= 2, min_split_gain= 0.):
         self.min_samples_split = min_samples_split
         self.min_split_gain = min_split_gain
         self.tree = None
