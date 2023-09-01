@@ -163,3 +163,4 @@ cython_debug/
 **/assets/
 # ignore book file
 book.pdf
+lab2/resultado.txt
