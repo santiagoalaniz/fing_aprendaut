@@ -15,10 +15,10 @@ def data():
   return data
 
 def main():  
-  N = 3
-  M = 120
+  N = 4
+  M = 1
   clf = G02NaiveBayesClassifier(data(), N=N, M=M)
-  
+
   frase = []
   n_ventana = []
   palabra_sugerida = ""
