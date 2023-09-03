@@ -5,7 +5,7 @@ nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.download('cess_esp', quiet=True)
 
-from nltk.corpus import stopwords, words, cess_esp
+from nltk.corpus import stopwords, cess_esp
 
 class G02Preprocessor:
     def __init__(self):
