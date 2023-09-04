@@ -1,9 +1,9 @@
-from bayesian_learning import G02NaiveBayesClassifier
-from whatsapp_regex import LOG_ENTRY_PATTERN
+from src.bayesian_learning import G02NaiveBayesClassifier
+from src.whatsapp_regex import LOG_ENTRY_PATTERN
 import re
 
 def data():
-  FILE_PATH = 'lab2/assets/chat.txt'
+  FILE_PATH = './assets/chat.txt'
   PATTERN = LOG_ENTRY_PATTERN
 
   with open(FILE_PATH, 'r', encoding='utf-8') as file:

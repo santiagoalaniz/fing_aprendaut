@@ -1,5 +1,5 @@
-from naive_bayes_utils import *
-from preprocessing import G02Preprocessor
+from src.naive_bayes_utils import *
+from src.preprocessing import G02Preprocessor
 
 from numpy import log
 import pdb

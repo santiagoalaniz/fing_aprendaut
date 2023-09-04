@@ -6,7 +6,7 @@ nltk.download('stopwords', quiet=True)
 
 from nltk.corpus import stopwords
 
-DICTIONARY_SPA_PATH = 'lab2/assets/diccionario.txt'
+DICTIONARY_SPA_PATH = 'assets/diccionario.txt'
 
 class G02Preprocessor:
     def __init__(self):
@@ -24,8 +24,8 @@ class G02Preprocessor:
             words = nltk.word_tokenize(message, language='spanish')
             words = [unidecode(word.lower()) for word in words]
             words = [word for word in words if word.isalpha()]
-            #words = [word for word in words if not word in self.stop_words]
-            #words = [word for word in words if len(word) > 1]
+            words = [word for word in words if not word in self.stop_words]
+            words = [word for word in words if len(word) > 1]
             words = [word for word in words if word in self.spanish_words]
             
             if len(words) == 0: continue
