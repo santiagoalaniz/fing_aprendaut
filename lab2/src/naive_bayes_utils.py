@@ -19,14 +19,14 @@ def build(data, N):
     return V, F_h, F_hD
 
 def p_h(h, V, F_h, m=1):
-    p = 1 / V
-    F_h_value = F_h[h] if h in F_h else 0
+    p = 1/ len(F_h)
+    F_h_value = F_h[h]
     
-    return (F_h_value + m * p) / (V + m)
+    return (F_h_value + m * p) / (len(F_h) + m)
 
-def p_hD(d, h, V, F_h, F_hD, m=1):
-    p = 1 / V
-    F_hD_given_h = F_hD[h][d] if h in F_hD and d in F_hD[h] else 0
-    F_h_value = F_h[h] if h in F_h else 0
+def p_hD(d, h, V, F_h, F_hD, m):
+    p = 1/ len(F_h)
+    F_hD_given_h = F_hD[h][d] if d in F_hD[h] else 0
+    F_h_value = F_h[h]
 
     return (F_hD_given_h + m * p) / (F_h_value + m)

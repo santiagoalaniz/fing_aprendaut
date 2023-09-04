@@ -17,7 +17,7 @@ class G02Preprocessor:
 
         self.spanish_words = set([unidecode(word.lower()) for word in dictionary])
     
-    def apply(self, data):
+    def apply(self, data, data_test=True):
         preprocessed_data = []
 
         for message in data:

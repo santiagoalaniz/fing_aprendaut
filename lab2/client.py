@@ -15,8 +15,9 @@ def data():
   return data
 
 def main():  
-  N = 4
-  M = 1
+  N = 1
+  M = 45
+
   clf = G02NaiveBayesClassifier(data(), N=N, M=M)
 
   frase = []
@@ -48,7 +49,7 @@ def main():
       frase.append(palabra)
 
     if frase:
-      frase_preprocesada = clf.preprocessor.apply([" ".join(frase)])
+      frase_preprocesada = clf.preprocessor.apply([" ".join(frase)], data_test=False)
       frase_propuesta = frase.copy()
       
       if not frase_preprocesada:
