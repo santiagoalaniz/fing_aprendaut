@@ -161,6 +161,6 @@ cython_debug/
 
 # ignore files inside assets subfolder
 **/assets/
+
 # ignore book file
 book.pdf
-lab2/resultado.txt

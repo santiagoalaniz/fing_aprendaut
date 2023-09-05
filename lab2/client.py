@@ -1,6 +1,7 @@
 from src.bayesian_learning import G02NaiveBayesClassifier
 from src.whatsapp_regex import LOG_ENTRY_PATTERN
 import re
+import pdb
 
 def data():
   FILE_PATH = './assets/chat.txt'
@@ -15,7 +16,7 @@ def data():
   return data
 
 def main():  
-  N = 1
+  N = 4
   M = 45
 
   clf = G02NaiveBayesClassifier(data(), N=N, M=M)
@@ -36,9 +37,9 @@ def main():
 
     elif palabra == ".":
       print("----- Comenzando frase nueva -----")
-      if n_ventana:
-        print(n_ventana)
-        clf.update(n_ventana)
+      preprocessed_frase = clf.preprocessor.apply([" ".join(frase)])
+      print(preprocessed_frase)
+      if preprocessed_frase: clf.update(preprocessed_frase[0])
       frase = []
       n_ventana = []
 
@@ -49,21 +50,10 @@ def main():
       frase.append(palabra)
 
     if frase:
-      frase_preprocesada = clf.preprocessor.apply([" ".join(frase)], data_test=False)
       frase_propuesta = frase.copy()
       
-      if not frase_preprocesada:
-        print(" ".join(frase_propuesta))
-        continue
 
-      if len(n_ventana) < len(frase_preprocesada[0]):
-        n_ventana = frase_preprocesada[0]
-
-      if len(n_ventana) < clf.N:
-        print(" ".join(frase_propuesta))
-        continue
-
-      palabra_sugerida = clf.predict(n_ventana[-clf.N:])
+      palabra_sugerida = clf.predict(frase[-N:])
       frase_propuesta.append("\x1b[3m"+ palabra_sugerida +"\x1b[0m")
 
 

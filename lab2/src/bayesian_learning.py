@@ -27,9 +27,9 @@ class G02NaiveBayesClassifier:
     def update(self, new_sentence):
         self.F_h.update(new_sentence)
 
-        for i in range(self.N, len(new_sentence)):
+        for i in range(0, len(new_sentence)):
             current_word = new_sentence[i]
-            previous_words = tuple(new_sentence[i-self.N:i])
+            previous_words = new_sentence[max(0, i - self.N):i]
 
             for previous_word in previous_words:
                 self.F_hD[current_word].update([previous_word])
