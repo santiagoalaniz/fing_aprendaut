@@ -17,12 +17,11 @@ def data():
 
 def main():  
   N = 4
-  M = 45
+  M = 1
 
   clf = G02NaiveBayesClassifier(data(), N=N, M=M)
 
   frase = []
-  n_ventana = []
   palabra_sugerida = ""
 
   print("Ingrese la frase dando ENTER luego de \x1b[3mcada palabra\x1b[0m.")

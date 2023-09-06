@@ -9,16 +9,18 @@ class G02NaiveBayesClassifier:
         self.preprocessor = G02Preprocessor()
         self.N = N
         self.M = M
-        self.V, self.F_h, self.F_hD = build(self.preprocessor.apply(data), N)
+        self.data = self.preprocessor.apply(data)
+        self.V, self.F_h, self.F_hD = build(self.data, N)
         
     
     def predict(self, sentence):
         argmax_ = {}
 
         for h in self.F_h.keys():
-            p = log(p_h(h, self.V, self.F_h, self.M))
+            p = log(p_h(h, self.V, self.F_h, self.data))
             for word in sentence:
-                p += log(p_hD(word, h, self.V, self.F_h, self.F_hD, self.M))
+                p += log(p_hD(word, h, 
+                              self.preprocessor.V_SPA, self.F_h, self.F_hD, self.M))
 
             argmax_[h] = p
         
