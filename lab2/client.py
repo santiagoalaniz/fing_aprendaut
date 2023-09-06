@@ -15,7 +15,7 @@ def data():
 
   return data
 
-def main():  
+def main():
   N = 4
   M = 1
 
@@ -36,11 +36,9 @@ def main():
 
     elif palabra == ".":
       print("----- Comenzando frase nueva -----")
-      preprocessed_frase = clf.preprocessor.apply([" ".join(frase)])
-      print(preprocessed_frase)
-      if preprocessed_frase: clf.update(preprocessed_frase[0])
+      print(clf.update(" ".join(frase)))
+
       frase = []
-      n_ventana = []
 
     elif palabra == "": # acepta última palabra sugerida
       frase.append(palabra_sugerida)
@@ -50,17 +48,11 @@ def main():
 
     if frase:
       frase_propuesta = frase.copy()
-      
-
-      palabra_sugerida = clf.predict(frase[-N:])
+      palabra_sugerida = clf.predict(frase)
       frase_propuesta.append("\x1b[3m"+ palabra_sugerida +"\x1b[0m")
-
 
       print(" ".join(frase_propuesta))
   return 0
 
 if __name__ == "__main__":
   main()
-
-
-
