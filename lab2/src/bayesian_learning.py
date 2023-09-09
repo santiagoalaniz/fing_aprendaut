@@ -1,16 +1,15 @@
 from src.naive_bayes_utils import *
 from src.preprocessing import G02Preprocessor
-
-from numpy import log
-import pdb
+from numpy import log2
 
 class G02NaiveBayesClassifier:
     def __init__(self, data, N= 1, M=1):
-        self.preprocessor = G02Preprocessor()
         self.N = N
         self.M = M
+        self.preprocessor = G02Preprocessor()
         self.data = self.preprocessor.apply(data)
-        self.V_DATA, self.F_h, self.F_hD = build(self.data, N)
+        self.V_SPA = self.preprocessor.V_SPA
+        self.N_OF_WORDS, self.F_h, self.F_hD = build(self.data, N)
 
 
     def predict(self, sentence):
@@ -18,10 +17,10 @@ class G02NaiveBayesClassifier:
         sentence = sentence[-self.N:]
 
         for h in self.F_h.keys():
-            p = log(p_h(h, self.V_DATA, self.F_h, self.data))
+            p = log2(p_h(h, self.N_OF_WORDS, self.F_h, self.data))
 
             for word in sentence:
-                p += log(p_hD(word, h, self.preprocessor.V_SPA, self.F_h, self.F_hD, self.M))
+                p += log2(p_hD(word, h, self.V_SPA, self.F_h, self.F_hD, self.M))
 
             argmax_[h] = p
 
@@ -34,7 +33,7 @@ class G02NaiveBayesClassifier:
         return h_map
 
     def update(self, new_sentence):
-        new_sentence = self.preprocessor.apply([new_sentence], data_test=False)
+        new_sentence = self.preprocessor.apply([new_sentence])
         if not new_sentence: return new_sentence
 
         preprocessed_sentence = new_sentence[0]
@@ -48,7 +47,6 @@ class G02NaiveBayesClassifier:
                 self.F_hD[current_word].update([previous_word])
 
         self.data += preprocessed_sentence
-        self.preprocessor.V_SPA = self.preprocessor.V_SPA.union(set(preprocessed_sentence))
-        self.V_DATA = sum(self.F_h.values())
+        self.N_OF_WORDS += len(preprocessed_sentence)
 
         return new_sentence

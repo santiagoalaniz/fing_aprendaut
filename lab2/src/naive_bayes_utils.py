@@ -1,5 +1,5 @@
 from collections import Counter, defaultdict
-from numpy import log
+from numpy import log2
 
 def build(data, N):
     F_h = Counter()
@@ -15,14 +15,14 @@ def build(data, N):
             for previous_word in previous_words:
                 F_hD[current_word].update([previous_word])
 
-    V = sum(F_h.values())
+    N_OF_WORDS = sum(F_h.values())
 
-    return V, F_h, F_hD
+    return N_OF_WORDS, F_h, F_hD
 
-def p_h(h, V, F_h, data):
-    fr = F_h[h] / V
+def p_h(h, N_OF_WORDS, F_h, data):
+    fr = F_h[h] / N_OF_WORDS
     h_in_data = len([x for x in data if h in x])
-    return fr * log(len(data) / (h_in_data))
+    return fr * log2(len(data) / (h_in_data))
 
 def p_hD(d, h, V_SPA, F_h, F_hD, m=1):
     p = 1/ len(V_SPA)

@@ -1,14 +1,13 @@
-import nltk
-from nltk.corpus import cess_esp
+from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from unidecode import unidecode
 
-nltk.download('cess_esp', quiet=True)
-
 class G02Preprocessor:
     def __init__(self):
-        self.V_SPA = set([unidecode(word.lower()) for word in cess_esp.words()])
+        with open('assets/es_words.txt', 'r') as f:
+            words = f.read().split('\n') + stopwords.words('spanish')
 
+        self.V_SPA = set([unidecode(word.lower()) for word in words])
 
     def apply(self, data, data_test=True):
         preprocessed_data = []
