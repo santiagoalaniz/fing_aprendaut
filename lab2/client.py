@@ -16,7 +16,7 @@ def data():
   return data
 
 def main():
-  N = 4
+  N = 3
   M = 1
 
   clf = G02NaiveBayesClassifier(data(), N=N, M=M)
