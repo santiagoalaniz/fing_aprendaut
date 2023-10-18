@@ -14,12 +14,13 @@ class NeuralNetwork(nn.Module):
         x = self.fc1(x) 
         x = self.sigmoid(x)  # aplicar la funcion sigmoide
         x = self.fc2(x)
-        x = F.softmax(x, dim=1)  # Convertir la salida en una distribución de probabilidad
+       # x = F.softmax(x, dim=1)  # Convertir la salida en una distribución de probabilidad
         return x
 
 def train_model(dataloader, model, loss_fn, optimizer,device):
     size = len(dataloader.dataset)
     total_loss = 0
+    correct = 0
     model.train()
     for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
@@ -33,9 +34,12 @@ def train_model(dataloader, model, loss_fn, optimizer,device):
         loss.backward()
         optimizer.step()
         optimizer.zero_grad()
-    
+
+        correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+
     avg_loss = total_loss / size
-    return avg_loss
+    acurracy = 100 * correct / size
+    return avg_loss, acurracy
    
 
 def test_model(dataloader, model, loss_fn, device):
