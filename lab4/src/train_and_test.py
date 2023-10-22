@@ -55,27 +55,32 @@ def train_and_evaluate(epochs, loss_fn, optimizer, model, train_dataloader, eval
     df = pd.DataFrame(results, columns=['Epoch', 'Tasa de aprendizaje','Train Loss', 'Eval Loss', 'Train Accuracy', 'Eval Accuracy'])
     return df
 
+def plot_results(result_arrays, results_name = ['']):
+    colores = ['blue', 'green', 'red', 'orange']
 
-
-def plot_results(results):
-    # Plot Loss
     plt.figure(figsize=(12, 4))
     plt.subplot(1, 2, 1)
-    plt.plot(results['Epoch'], results['Train Loss'], label='Train Loss')
-    plt.plot(results['Epoch'], results['Eval Loss'], label='Eval Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.title('Training and Evaluation Loss')
+    
+    for i, results in enumerate(result_arrays):
+        plt.plot(results['Epoch'], results['Train Loss'], label=f'Entrenamiento {results_name[i]}', linestyle='--', color=colores[i])
+        plt.plot(results['Epoch'], results['Eval Loss'], label=f'Evaluación {results_name[i]}', color=colores[i])
+
+    plt.xlabel('Épocas')
+    plt.ylabel('Perdida')
+    plt.title('Evolución de la perdida')
     plt.legend()
 
-    # Plot Accuracy
     plt.subplot(1, 2, 2)
-    plt.plot(results['Epoch'], results['Train Accuracy'], label='Train Accuracy')
-    plt.plot(results['Epoch'], results['Eval Accuracy'], label='Eval Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy (%)')
-    plt.title('Training and Evaluation Accuracy')
+    
+    for i, results in enumerate(result_arrays):
+        plt.plot(results['Epoch'], results['Train Accuracy'], label=f'Entrenamiento {results_name[i]}', linestyle='--', color=colores[i])
+        plt.plot(results['Epoch'], results['Eval Accuracy'], label=f'Evaluación {results_name[i]}', color=colores[i])
+
+    plt.xlabel('Épocas')
+    plt.ylabel('Precisión (%)')
+    plt.title('Evolución de la precisión')
     plt.legend()
 
     plt.tight_layout()
     plt.show()
+
