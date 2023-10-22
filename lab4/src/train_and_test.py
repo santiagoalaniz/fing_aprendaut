@@ -43,19 +43,16 @@ def test_model(dataloader, model, loss_fn, device):
     acurracy = 100 * correct / size
     return avg_loss, acurracy
 
-def train_and_evaluate(epochs, loss_fn, optimizer, model, train_dataloader, eval_dataloader, DEVICE):
+def train_and_evaluate(epochs, loss_fn, optimizer, model, train_dataloader, eval_dataloader, lr, DEVICE):
     results = []
-    print(model)
-    for t in range(epochs):
-        print(f"Epoch {t+1}:")
-        
+    for t in range(epochs):    
+           
         train_loss, train_acc = train_model(train_dataloader, model, loss_fn, optimizer, DEVICE)
         eval_loss, eval_acc = test_model(eval_dataloader, model, loss_fn, DEVICE)
-        
-        print(f"Train loss {train_loss}, Eval loss {eval_loss}, Train accuracy {train_acc}, Eval accuracy {eval_acc}\n-------------------------------")
 
-        results.append((t, train_loss, eval_loss, train_acc, eval_acc))
-    df = pd.DataFrame(results, columns=['Epoch', 'Train Loss', 'Eval Loss', 'Train Accuracy', 'Eval Accuracy'])
+        results.append((t, lr, train_loss, eval_loss, train_acc, eval_acc))
+       
+    df = pd.DataFrame(results, columns=['Epoch', 'Tasa de aprendizaje','Train Loss', 'Eval Loss', 'Train Accuracy', 'Eval Accuracy'])
     return df
 
 
@@ -64,8 +61,8 @@ def plot_results(results):
     # Plot Loss
     plt.figure(figsize=(12, 4))
     plt.subplot(1, 2, 1)
-    plt.plot(results['Epoch'], results['Train Loss'], label='Train Loss', marker='o')
-    plt.plot(results['Epoch'], results['Eval Loss'], label='Eval Loss', marker='o')
+    plt.plot(results['Epoch'], results['Train Loss'], label='Train Loss')
+    plt.plot(results['Epoch'], results['Eval Loss'], label='Eval Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Training and Evaluation Loss')
@@ -73,8 +70,8 @@ def plot_results(results):
 
     # Plot Accuracy
     plt.subplot(1, 2, 2)
-    plt.plot(results['Epoch'], results['Train Accuracy'], label='Train Accuracy', marker='o')
-    plt.plot(results['Epoch'], results['Eval Accuracy'], label='Eval Accuracy', marker='o')
+    plt.plot(results['Epoch'], results['Train Accuracy'], label='Train Accuracy')
+    plt.plot(results['Epoch'], results['Eval Accuracy'], label='Eval Accuracy')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy (%)')
     plt.title('Training and Evaluation Accuracy')
