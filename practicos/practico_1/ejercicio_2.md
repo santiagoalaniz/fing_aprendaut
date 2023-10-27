@@ -9,12 +9,12 @@ Hipotesis vista en el curso:
 
 *h* es la conjuncion de los atributos de la tabla de datos, y *c* es la columna de la tabla de datos que indica la funcion objetivo. El espacio de hipotesis H es el conjunto de todas las posibles conjunciones de los atributos de la tabla de datos. Entonces, el tamaño de $|H|$ es:
 
-$ 
+$
 |H| = |Cielo| * |Temp| * |Humedad| * |Viento| * |Tmp. Agua| * |Tiempo| * |Juega|
 $
 <br>
 $
-|H| = 3 * 2 * 2 * 2 * 2 * 2 = 3 * 2^5 = 3 * 32 = 96
+|H| = 5 * 4 * 4 * 4 * 4 * 4 * 4 = 20480
 $
 
 ## Parte II
@@ -23,11 +23,11 @@ Para calcular el espacio de versiones hay que tener en cuenta que el mismo se pu
 
 ```
 S = [Soleado, Templado, ?, Fuerte, ?, ?]
-G = [Soleado, ?, ?, ?, ?, ?], 
-    [?, Templado, ?, ?, ?, ?], 
-    [?, ?, Normal, ?, ?, ?], 
-    [?, ?, ?, Suave, ?, ?], 
-    [?, ?, ?, ?, Fría, ?], 
+G = [Soleado, ?, ?, ?, ?, ?],
+    [?, Templado, ?, ?, ?, ?],
+    [?, ?, Normal, ?, ?, ?],
+    [?, ?, ?, Suave, ?, ?],
+    [?, ?, ?, ?, Fría, ?],
     [?, ?, ?, ?, ?, Cambiante]
 ```
 
@@ -54,4 +54,3 @@ Para determinar la respuesta a las instancias dadas, debemos verificar si cada i
 - No es consistente con S debido a la temperatura.
 - Es consistente con las hipótesis generales 1 y 3 en G.
 **Respuesta**: No se puede determinar con certeza. Podría ser "Sí" o "No".
-
