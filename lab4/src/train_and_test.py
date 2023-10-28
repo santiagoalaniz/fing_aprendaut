@@ -1,6 +1,7 @@
 import torch
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 def train_model(dataloader, model, loss_fn, optimizer,device):
     size = len(dataloader.dataset)
@@ -59,7 +60,7 @@ def plot_results(result_arrays, results_name = ['']):
     colores = ['blue', 'green', 'red', 'orange']
 
     plt.figure(figsize=(12, 4))
-    plt.subplot(1, 2, 1)
+    plt.subplot(1, 3, 1)
     
     for i, results in enumerate(result_arrays):
         plt.plot(results['Epoch'], results['Train Loss'], label=f'Entrenamiento {results_name[i]}', linestyle='--', color=colores[i])
@@ -70,15 +71,15 @@ def plot_results(result_arrays, results_name = ['']):
     plt.title('Evolución de la perdida')
     plt.legend()
 
-    plt.subplot(1, 2, 2)
+    plt.subplot(1, 3, 2)
     
     for i, results in enumerate(result_arrays):
         plt.plot(results['Epoch'], results['Train Accuracy'], label=f'Entrenamiento {results_name[i]}', linestyle='--', color=colores[i])
         plt.plot(results['Epoch'], results['Eval Accuracy'], label=f'Evaluación {results_name[i]}', color=colores[i])
 
     plt.xlabel('Épocas')
-    plt.ylabel('Precisión (%)')
-    plt.title('Evolución de la precisión')
+    plt.ylabel('Accuracy (%)')
+    plt.title('Evolución de accuracy')
     plt.legend()
 
     plt.tight_layout()
