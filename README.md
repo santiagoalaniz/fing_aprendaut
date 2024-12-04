@@ -1,3 +1,3 @@
-# Aprendizaje Automático.
+# Aprendizaje Automático
 
-Recopilación de ejercicios y proyectos realizados en el curso de Aprendizaje Automático, FING, UdelaR.
+Este repositorio es un compendio de materiales y ejercicios realizados para la asignatura de Aprendizaje Automático, FING, UDELAR.
